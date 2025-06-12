@@ -1,8 +1,8 @@
-<h1>Authors</h1>
+<h1>Autores</h1>
 
 <ul>
     @foreach($authors as $author)
-        <li>{{ $author->name }}</li>
+        <li>{{ $author->name }} | <a href="{{ route('author', [$author->id]) }}" class="btn"> detalhes </a></li>
     @endforeach
 </ul>
 

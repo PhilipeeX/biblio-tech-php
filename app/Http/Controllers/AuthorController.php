@@ -34,7 +34,9 @@ class AuthorController extends Controller
 
   public function show(string $id)
   {
-    //
+    $author = Author::FindOrFail($id);
+
+    return view('authors.show', compact('author'));
   }
 
   public function edit(string $id)
