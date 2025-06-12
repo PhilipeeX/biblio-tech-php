@@ -98,4 +98,18 @@ class AuthorControllerTest extends TestCase
     $response->assertSessionHasErrors(['name']);
     $this->assertCount(0, Author::all());
   }
+
+  public function test_show(): void
+  {
+    Author::factory()->create(['name'=>'Rodrigo']);
+    $philipeId = Author::factory()->create(['name'=>'Philipe'])->id;
+
+    $response = $this->get("/autor/{$philipeId}");
+
+    $response->assertOk();
+    $response->assertViewIs('authors.show');
+    $author = $response->viewData('author');
+
+    $this->assertEquals('Philipe', $author->name);
+  }
 }
