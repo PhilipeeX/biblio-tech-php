@@ -145,4 +145,15 @@ class AuthorControllerTest extends TestCase
     $this->assertDatabaseMissing('authors', ['name' => 'José123']);
     $this->assertCount(1, Author::all());
   }
+
+  public function test_destroy(): void
+  {
+    $author = Author::factory()->create(['name'=>'Fernando Torres']);
+
+    $response = $this->delete("/autor/{$author->id}");
+
+    $response->assertRedirect();
+    $this->assertDatabaseMissing('authors', ['name' => 'Fernando Torres']);
+    $this->assertCount(0, Author::all());
+  }
 }
