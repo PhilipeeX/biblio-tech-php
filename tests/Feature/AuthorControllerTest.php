@@ -47,7 +47,7 @@ class AuthorControllerTest extends TestCase
      *  existe exatamente 1 autor no banco;
      **/
     $response->assertRedirect(route('authors.index'));
-    $response->assertSessionHas('success', 'Author created successfully!');
+    $response->assertSessionHas('success', 'Autor cadastrado com sucesso!');
     $this->assertDatabaseHas('authors', [
       'name' => 'Bruno Silva'
     ]);
@@ -121,6 +121,7 @@ class AuthorControllerTest extends TestCase
     $response = $this->patch("/autor/{$author->id}", $authorData);
 
     $response->assertRedirect();
+    $response->assertSessionHas('success', 'Autor atualizado com sucesso!');
     $this->assertDatabaseMissing('authors', ['name' => 'Fernando Torres']);
     $this->assertCount(1, Author::all());
   }

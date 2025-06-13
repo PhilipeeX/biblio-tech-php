@@ -20,13 +20,9 @@ class AuthorController extends Controller
 
   public function store(Request $request)
   {
-    $request->validate([
-      'name' => 'required|string|max:255|alpha'
-    ]);
+    $request->validate($this->paramsValidate(), $this->getValidationMessages());
 
-    Author::create([
-      'name' => $request->name,
-    ]);
+    Author::create(['name' => $request->name]);
 
     return redirect()->route('authors.index')
       ->with('success', 'Autor cadastrado com sucesso!');
@@ -48,9 +44,7 @@ class AuthorController extends Controller
 
   public function update(Request $request, string $id)
   {
-    $request->validate([
-      'name' => 'required|string|max:255|alpha'
-    ]);
+    $request->validate($this->paramsValidate(), $this->getValidationMessages());
 
     $author = Author::findOrFail($id);
     $author->update(['name' => $request->name]);
@@ -66,5 +60,24 @@ class AuthorController extends Controller
 
     return redirect()->route('authors.index')
       ->with('success', 'Autor removido com sucesso!');
+  }
+
+  private function paramsValidate()
+  {
+    return [
+      'name' => [
+        'required',
+        'string',
+        'max:255',
+        'regex:/^[a-zA-ZÀ-ÿñÑ\s\.\-\']+$/u'
+      ]
+    ];
+  }
+
+  private function getValidationMessages()
+  {
+    return [
+      'name.regex' => 'O nome deve conter apenas letras, espaços, pontos, hífens e apóstrofes.'
+    ];
   }
 }
