@@ -10,3 +10,4 @@ Route::get('/autores/cadastrar', [AuthorController::class, 'create'])->name('aut
 Route::post('/autor', [AuthorController::class, 'store'])->name('authors.store');
 Route::get('/autor/{id}/editar', [AuthorController::class, 'edit'])->name('author.edit');
 Route::patch('/autor/{id}', [AuthorController::class, 'update'])->name('author.update');
+Route::delete('/autor/{id}', [AuthorController::class, 'destroy'])->name('author.destroy');
