@@ -112,4 +112,37 @@ class AuthorControllerTest extends TestCase
 
     $this->assertEquals('Philipe', $author->name);
   }
+
+  public function test_update(): void
+  {
+    $author = Author::factory()->create(['name'=>'Fernando Torres']);
+    $authorData = ['name' => 'José Antunes'];
+
+    $response = $this->patch("/autor/{$author->id}", $authorData);
+
+    $response->assertRedirect();
+    $this->assertDatabaseMissing('authors', ['name' => 'Fernando Torres']);
+    $this->assertCount(1, Author::all());
+  }
+
+  /*
+  * Valida se não permite cadastrar autor com caracteres especiais e/ou números no nome
+  */
+  public function test_update_author_with_numbers_in_name_fails(): void
+  {
+    $author = Author::factory()->create(['name' => 'Fernando Torres']);
+    $invalidData = ['name' => 'José123'];
+
+    $response = $this->patch("/autor/{$author->id}", $invalidData);
+
+    $response->assertSessionHasErrors(['name']);
+    $response->assertRedirect();
+
+    $this->assertDatabaseHas('authors', [
+      'id' => $author->id,
+      'name' => 'Fernando Torres'
+    ]);
+    $this->assertDatabaseMissing('authors', ['name' => 'José123']);
+    $this->assertCount(1, Author::all());
+  }
 }
