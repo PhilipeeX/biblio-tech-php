@@ -21,7 +21,7 @@ class AuthorController extends Controller
   public function store(Request $request)
   {
     $request->validate([
-      'name' => 'required|string|max:255'
+      'name' => 'required|string|max:255|alpha'
     ]);
 
     Author::create([
@@ -29,7 +29,7 @@ class AuthorController extends Controller
     ]);
 
     return redirect()->route('authors.index')
-      ->with('success', 'Author created successfully!');
+      ->with('success', 'Autor cadastrado com sucesso!');
   }
 
   public function show(string $id)
@@ -41,12 +41,22 @@ class AuthorController extends Controller
 
   public function edit(string $id)
   {
-    //
+    $author = Author::FindOrFail($id);
+
+    return view('authors.edit', compact('author'));
   }
 
   public function update(Request $request, string $id)
   {
-    //
+    $request->validate([
+      'name' => 'required|string|max:255|alpha'
+    ]);
+
+    $author = Author::findOrFail($id);
+    $author->update(['name' => $request->name]);
+
+    return redirect()->route('author', $author->id)
+      ->with('success', 'Autor atualizado com sucesso!');
   }
 
   public function destroy(string $id)

@@ -2,7 +2,7 @@
 
 <ul>
     @foreach($authors as $author)
-        <li>{{ $author->name }} | <a href="{{ route('author', [$author->id]) }}" class="btn"> detalhes </a></li>
+        <li>{{ $author->name }}    | <a href="{{ route('author', [$author->id]) }}" class="btn"> detalhes </a>     | <a href="{{ route('author.edit', [$author->id]) }}" class="btn"> editar </a></li>
     @endforeach
 </ul>
 
