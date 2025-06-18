@@ -60,5 +60,9 @@ chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 echo "🎉 Aplicação pronta! Acesse: http://localhost:8000"
 
+# Verificar se Xdebug está funcionando
+echo "🐛 Verificando Xdebug..."
+php -m | grep -i xdebug && echo "✅ Xdebug instalado!" || echo "❌ Xdebug não encontrado"
+
 # Executar comando passado como argumento (php-fpm)
 exec "$@"
