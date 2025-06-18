@@ -11,7 +11,7 @@ Bem-vindo ao BiblioTech-php, um projeto para aprender PHP Laravel baseado em out
 ## Funcionalidades para Implementar
 
 [ ] **CRUDs**
-- [ ] Cadastrar Autores
+- [x] Cadastrar Autores
 - [ ] Cadastrar Livros vinculando com Autor
 - [ ] Cadastrar Fornecedores com uma Conta
 - [ ] Cadastrar Peças vinculando com Fornecedor
